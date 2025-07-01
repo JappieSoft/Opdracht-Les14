@@ -5,21 +5,16 @@ import { Link } from 'react-router-dom';
 
 function SignIn() {
     console.log ('Hello World');
-    const {authenticated, logIn} = useContext(AuthContext);
-/*    const {logIn} = useContext(AuthContext);*/
-
+    const {logIn} = useContext(AuthContext);
 
     return (
     <>
       <h1>Inloggen</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias cum debitis dolor dolore fuga id molestias qui quo unde?</p>
 
-      <form>
+      <form onSubmit={logIn}>
         <p>*invoervelden*</p>
-          <button
-              type="button"
-              onClick={() => logIn()}
-          >
+          <button type="submit">
               Inloggen
           </button>
       </form>

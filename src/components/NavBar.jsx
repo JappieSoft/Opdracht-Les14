@@ -19,29 +19,31 @@ function NavBar() {
           </span>
         </Link>
 
+      {authenticated === false &&
       <div>
-        {authenticated === false &&
         <button
           type="button"
           onClick={() => navigate('/signin')}
         >
           Log in
-        </button>}
-        {authenticated === false &&
+        </button>
         <button
           type="button"
           onClick={() => navigate('/signup')}
         >
           Registreren
-        </button>}
-        {authenticated === true &&
+        </button>
+      </div>}
+
+      {authenticated === true &&
+        <div>
         <button
             type="button"
             onClick={() => logOut()}
         >
           Log Uit
-        </button>}
-      </div>
+        </button>
+      </div>}
     </nav>
   );
 }
