@@ -1,15 +1,16 @@
 import {createContext, useState} from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export const AuthContext = createContext({});
 
-function AuthContextProvider({ children }) {
+function AuthContextProvider({children}) {
     const navigate = useNavigate();
     const [isAuth, toggleIsAuth] = useState({isAuth: false, user: ""});
 
     const logIn = (data) => {
+        console.log(data);
         const inloggen = {
-            ...data,
+            user: data.email,
             isAuth: true,
         };
         toggleIsAuth(inloggen);
@@ -19,7 +20,7 @@ function AuthContextProvider({ children }) {
 
     const logOut = (data) => {
         const uitloggen = {
-            ...data,
+            user: "",
             isAuth: false,
         };
         toggleIsAuth(uitloggen);

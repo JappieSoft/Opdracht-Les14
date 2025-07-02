@@ -11,11 +11,11 @@ function SignIn() {
     const [loading, toggleLoading] = useState(false);
 
     const onSubmit = (data) => {
-        logIn(authenticated);
+        logIn(data, authenticated);
         setLoginData(data);
         /*setError("No Error");*/
         /*toggleLoading(true);*/
-       /* console.log(data);*/
+        /* console.log(data);*/
     };
     console.log(loginData);
 
