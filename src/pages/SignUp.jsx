@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {AuthContext} from '../context/AuthContext.jsx';
-import {Link} from 'react-router-dom';
+import {AuthContext} from "../context/AuthContext.jsx";
+import {Link} from "react-router-dom";
 
 function SignUp() {
     const {logIn} = useContext(AuthContext);

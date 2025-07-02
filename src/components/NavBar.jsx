@@ -1,12 +1,13 @@
-import React, {useContext} from 'react';
-import {AuthContext} from '../context/AuthContext.jsx';
-import logo from '../assets/banana-01.png';
-import { useNavigate, Link } from 'react-router-dom';
+import React, {useContext} from "react";
+import {AuthContext} from "../context/AuthContext.jsx";
+import logo from "../assets/banana-01.png";
+import { useNavigate, Link } from "react-router-dom";
 
 function NavBar() {
   const navigate = useNavigate();
   const {authenticated, logOut} = useContext(AuthContext);
-  console.log(`authenticated = ${authenticated}`);
+  console.log(`authenticated = ${authenticated.isAuth}`);
+  console.log(authenticated);
 
   return (
     <nav>
@@ -19,23 +20,23 @@ function NavBar() {
           </span>
         </Link>
 
-      {authenticated === false &&
+      {authenticated.isAuth === false &&
       <div>
         <button
           type="button"
-          onClick={() => navigate('/signin')}
+          onClick={() => navigate("/signin")}
         >
           Log in
         </button>
         <button
           type="button"
-          onClick={() => navigate('/signup')}
+          onClick={() => navigate("/signup")}
         >
           Registreren
         </button>
       </div>}
 
-      {authenticated === true &&
+      {authenticated.isAuth === true &&
         <div>
         <button
             type="button"

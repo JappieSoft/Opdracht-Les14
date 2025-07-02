@@ -1,17 +1,17 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {AuthContext} from '../context/AuthContext.jsx';
-import {Link} from 'react-router-dom';
+import {AuthContext} from "../context/AuthContext.jsx";
+import {Link} from "react-router-dom";
 
 function SignIn() {
-    const {logIn} = useContext(AuthContext);
+    const {authenticated, logIn} = useContext(AuthContext);
     const {register, handleSubmit, formState: {errors}} = useForm();
     const [loginData, setLoginData] = useState({});
     const [error, setError] = useState("");
     const [loading, toggleLoading] = useState(false);
 
     const onSubmit = (data) => {
-        logIn();
+        logIn(authenticated);
         setLoginData(data);
         /*setError("No Error");*/
         /*toggleLoading(true);*/

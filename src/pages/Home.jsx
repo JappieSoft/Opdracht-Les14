@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import { Link } from 'react-router-dom';
+import React, {useContext} from "react";
+import { Link } from "react-router-dom";
 import {AuthContext} from "../context/AuthContext";
 
 function Home() {
@@ -29,9 +29,9 @@ function Home() {
       </section>
 
       <section>
-        {authenticated === true &&
+        {authenticated.isAuth === true &&
             <p>Je bent ingelogd, bekijk hier de <Link to="/profile">Profielpagina</Link></p>}
-        {authenticated === false &&
+        {authenticated.isAuth === false &&
           <p>Je kunt ook <Link to="/signin">inloggen</Link> of jezelf <Link to="/signup">registeren</Link> als je nog geen
           account hebt.</p>}
       </section>
