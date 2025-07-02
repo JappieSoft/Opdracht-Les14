@@ -5,7 +5,7 @@ export const AuthContext = createContext({});
 
 function AuthContextProvider({ children }) {
     const navigate = useNavigate();
-    const [isAuth, toggleIsAuth] = useState(true);
+    const [isAuth, toggleIsAuth] = useState(false);
 
     function logIn() {
         toggleIsAuth(true);

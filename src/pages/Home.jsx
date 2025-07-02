@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
+import {AuthContext} from "../context/AuthContext";
 
 function Home() {
+  const {authenticated} = useContext(AuthContext);
   return (
     <>
       <h1>Homepagina</h1>
@@ -25,10 +27,13 @@ function Home() {
           temporibus?
         </p>
       </section>
+
       <section>
-        <p>Als je ingelogd bent, bekijk dan de <Link to="/profile">Profielpagina</Link></p>
-        <p>Je kunt ook <Link to="/signin">inloggen</Link> of jezelf <Link to="/signup">registeren</Link> als je nog geen
-          account hebt.</p>
+        {authenticated === true &&
+            <p>Je bent ingelogd, bekijk hier de <Link to="/profile">Profielpagina</Link></p>}
+        {authenticated === false &&
+          <p>Je kunt ook <Link to="/signin">inloggen</Link> of jezelf <Link to="/signup">registeren</Link> als je nog geen
+          account hebt.</p>}
       </section>
     </>
   );
