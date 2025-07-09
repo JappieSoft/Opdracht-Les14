@@ -33,7 +33,7 @@ a:hover {
 }
 
 /*Algemene formulier-styling*/
-form {
+.form-area {
   display: flex;
   flex-direction: column;
   background-color: #faeab3;

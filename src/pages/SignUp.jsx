@@ -1,23 +1,59 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {AuthContext} from "../context/AuthContext.jsx";
 import {Link} from "react-router-dom";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
+
+async function postUser(dataPush, setError, setApiData, toggleLoading) {
+    const controller = new AbortController()
+    setError("");
+    toggleLoading(true);
+    console.log("dataPush is:");
+    console.log(dataPush);
+
+    try {
+        const response = await axios.post(
+            "https://novi-backend-api-wgsgz.ondigitalocean.app/api/users",
+            {
+                email: dataPush.email,
+                password: dataPush.password,
+                roles: [dataPush.roles],
+            },
+            {
+                headers: {"novi-education-project-id": `${import.meta.env.VITE_API_KEY}`},
+                signal: controller.signal,
+            }
+        );
+        setApiData(response.data);
+        controller.abort();
+    } catch (error) {
+        setError("Er is iets fout gegaan met het registreren.");
+        console.error(error);
+    } finally {
+        toggleLoading(false);
+    }
+}
 
 function SignUp() {
-    const {authenticated, logIn} = useContext(AuthContext);
     const {register, handleSubmit, formState: {errors}} = useForm();
-    const [registerData, setRegisterData] = useState({});
     const [error, setError] = useState("");
     const [loading, toggleLoading] = useState(false);
+    const [apiResponse , setApiResponse] = useState("");
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        logIn(data, authenticated);
-        setRegisterData(data);
-        /*      setError("No Error");
-                toggleLoading(true);*/
-        /*console.log(data);*/
+        postUser(data, setError, setApiResponse, toggleLoading).then(() => {
+        if(error.error){
+            console.log(error.error)
+        } else {
+            setTimeout(() => {
+                navigate("/signin");
+            }, 1750);
+        }
+        });
     };
-    console.log(registerData);
+
+    console.log(apiResponse);
 
     useEffect(() => {
         return function cleanup() {
@@ -29,7 +65,13 @@ function SignUp() {
             <h1>Registreren</h1>
             <p>Geweldig nieuws dat je onderdeel wil zijn van de Banana Security familie!</p>
             <p>Graag hieronder registreren:</p>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            {apiResponse && <div className="form-area">
+                <h3>Registratie gelukt!</h3>
+                <p>U word doorgestuurd...</p>
+            </div>}
+
+            {!apiResponse &&
+                <form className="form-area" onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="email">Email</label>
                 <input
                     id="email"
@@ -47,7 +89,7 @@ function SignUp() {
                 <input
                     id="password"
                     {...register("password", {
-                        required: "required",
+                        /*required: "required",*/
                         minLength: {
                             value: 5,
                             message: "min lengte is 5 characters",
@@ -61,8 +103,13 @@ function SignUp() {
                     type="text"
                     {...register("user", {required: true})}/>
                 {errors.user && <p className="errorMsg">{"De gebruikersnaam mag niet ontbreken."}</p>}
-                <button type="submit">Inloggen</button>
-            </form>
+                <input
+                    type="hidden"
+                    value="user,anonymous"
+                    {...register("roles", {required: true})}/>
+                {errors.roles && <p className="errorMsg">{"De gebruiker rol mag niet ontbreken."}</p>}
+                <button type="submit">Registreren & Inloggen</button>
+            </form>}
 
             {loading && <p>Registreren...</p>}
             {error && <h4 className="error">{error}</h4>}

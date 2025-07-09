@@ -29,7 +29,7 @@ function SignIn() {
             <h1>Inloggen</h1>
             <p>Leuk dat je wil inloggen op onze pagina, doe dat hieronder & geniet van alle data!</p>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form className="form-area" onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="email">email</label>
                 <input
                     id="email"
