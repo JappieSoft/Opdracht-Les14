@@ -38,7 +38,7 @@ function NavBar() {
 
             {authenticated.isAuth === true &&
                 <div>
-                    <p><strong>Email: </strong>{authenticated.user}</p>
+                    <p><strong>Email: </strong>{authenticated.user.email}</p>
                 </div>}
             {authenticated.isAuth === true &&
                 <div>

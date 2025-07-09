@@ -9,8 +9,8 @@ function Profile() {
             <h1>Profielpagina</h1>
             <section>
                 <h2>Gegevens</h2>
-                <p><strong>Gebruikersnaam: </strong> hardcoded-test</p>
-                <p><strong>Email: </strong>{authenticated.user}</p>
+                <p><strong>Gebruikersnaam: </strong>{authenticated.user.userId}</p>
+                <p><strong>Email: </strong>{authenticated.user.email}</p>
             </section>
             <section>
                 <h2>Strikt geheime profiel-content</h2>
