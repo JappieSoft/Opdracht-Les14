@@ -1,6 +1,7 @@
 import {createContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {jwtDecode} from 'jwt-decode';
+import {jwtDecode} from "jwt-decode";
+import tokenValid from "../helpers/tokenValidity";
 
 export const AuthContext = createContext({});
 
@@ -9,29 +10,36 @@ function AuthContextProvider({children}) {
     const [isAuth, setIsAuth] = useState({isAuth: false, user: null, status: "done"});
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         console.log(token);
 
         if (token) {
             const decodedToken = jwtDecode(token)
             console.log(decodedToken);
 
-             setIsAuth({
-                 isAuth: true,
-                 user: {
-                     email: decodedToken.email,
-                     roles: decodedToken.role,
-                     userId: decodedToken.userId,
-                 },
-                 status: "done",
-             });
-
+            if (tokenValid(decodedToken)) {
+                setIsAuth({
+                    isAuth: true,
+                    user: {
+                        email: decodedToken.email,
+                        roles: decodedToken.role,
+                        userId: decodedToken.userId,
+                    },
+                    status: "done",
+                });
+            } else {
+                logOut();
+            }
+        } else {
+            setIsAuth({
+                ...isAuth,
+                status: "done",
+            });
         }
-
     }, []);
 
-    const logIn = () => {
-        const token = localStorage.getItem('token');
+    function logIn() {
+        const token = localStorage.getItem("token");
         const decodedToken = jwtDecode(token)
 
         setIsAuth({
@@ -47,8 +55,8 @@ function AuthContextProvider({children}) {
         navigate("/profile");
     };
 
-    const logOut = () => {
-        localStorage.removeItem('token');
+    function logOut() {
+        localStorage.removeItem("token");
         const uitloggen = {
             user: null,
             isAuth: false,
@@ -67,7 +75,7 @@ function AuthContextProvider({children}) {
 
     return (
         <AuthContext.Provider value={contextData}>
-            {isAuth.status === 'done' ? children : <p>Loading...</p>}
+            {isAuth.status === "done" ? children : <p>Loading...</p>}
         </AuthContext.Provider>
     )
 }
