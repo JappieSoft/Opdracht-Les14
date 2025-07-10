@@ -86,13 +86,13 @@ function SignUp() {
                     <input
                         id="password"
                         {...register("password", {
-                            /*required: "required",*/
+                            required: "required",
                             minLength: {
                                 value: 5,
                                 message: "min lengte is 5 characters",
                             },
                         })}
-                        type="text" /*Deze kan ook op wachtwoord, maar dan krijg je een memory leak & heel veel get errors door wachtwoord app*/
+                        type="password" /* Deze is schoon op "text" maar nu op wachtwoord krijg je heel veel get errors door wachtwoord app / auto-completion van browser */
                     />
                     {errors.password && <span role="alert">{errors.password.message}</span>}
                     <label htmlFor="user">Gebruikersnaam</label>

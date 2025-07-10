@@ -23,7 +23,7 @@ async function loginUser(dataPush, setError, setApiData, toggleLoading) {
         );
         setApiData(response.data);
         console.log(response.data);
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem("token", response.data.token);
         controller.abort();
     } catch (error) {
         setError("Er is iets fout gegaan met het registreren.");
@@ -52,8 +52,6 @@ function SignIn() {
         });
     };
 
-/*    console.log(loginData);*/
-
     useEffect(() => {
         return function cleanup() {
         }
@@ -64,40 +62,41 @@ function SignIn() {
             <h1>Inloggen</h1>
             <p>Leuk dat je wil inloggen op onze pagina, doe dat hieronder & geniet van alle data!</p>
 
+
             {apiResponse && <div className="form-area">
                 <h3>Succesvol ingelogd!</h3>
                 <p>U word doorgestuurd...</p>
             </div>}
             {!apiResponse &&
-            <form className="form-area" onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="email">email</label>
-                <input
-                    id="email"
-                    {...register("email", {
-                        required: "required",
-                        pattern: {
-                            value: /\S+@\S+\.\S+/,
-                            message: "De ingevoerde waarde komt niet overeen met een e-mailadres",
-                        },
-                    })}
-                    type="email"
-                />
-                {errors.email && <span role="alert">{errors.email.message}</span>}
-                <label htmlFor="password">password</label>
-                <input
-                    id="password"
-                    {...register("password", {
-                        required: "required",
-                        minLength: {
-                            value: 5,
-                            message: "min lengte is 5 characters",
-                        },
-                    })}
-                    type="text" /*Deze kan ook op wachtwoord, maar dan krijg je een memory leak & heel veel get errors door wachtwoord app*/
-                />
-                {errors.password && <span role="alert">{errors.password.message}</span>}
-                <button type="submit">Inloggen</button>
-            </form>}
+                <form className="form-area" onSubmit={handleSubmit(onSubmit)}>
+                    <label htmlFor="email">email</label>
+                    <input
+                        id="email"
+                        {...register("email", {
+                            required: "required",
+                            pattern: {
+                                value: /\S+@\S+\.\S+/,
+                                message: "De ingevoerde waarde komt niet overeen met een e-mailadres",
+                            },
+                        })}
+                        type="email"
+                    />
+                    {errors.email && <span role="alert">{errors.email.message}</span>}
+                    <label htmlFor="password">password</label>
+                    <input
+                        id="password"
+                        {...register("password", {
+                            required: "required",
+                            minLength: {
+                                value: 5,
+                                message: "min lengte is 5 characters",
+                            },
+                        })}
+                        type="text" /*Deze kan ook op wachtwoord, maar dan krijg je een memory leak & heel veel get errors door wachtwoord app*/
+                    />
+                    {errors.password && <span role="alert">{errors.password.message}</span>}
+                    <button type="submit">Inloggen</button>
+                </form>}
 
             {loading && <p>Inloggen...</p>}
             {error && <h4 className="error">{error}</h4>}
