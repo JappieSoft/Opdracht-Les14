@@ -46,7 +46,7 @@ function SignIn() {
                 console.log(error.error)
             } else {
                 setTimeout(() => {
-                    logIn(data);
+                    logIn();
                 }, 1750);
             }
         });
